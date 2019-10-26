@@ -18,17 +18,41 @@ class MyStreamListener(tweepy.StreamListener):
         self.table = self.client.get_table(self.client.dataset("twitter").table("messages"))
     
     def clean_text(self, text):
-        return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
+        return " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
 
     def on_data(self, tweet):
         tweet = json.loads(tweet)
         message = self.clean_text(tweet["text"])
         sentiment = self.analyzer.get_sentiment(message)
-        row = [ ( tweet["id_str"], True, tweet["created_at"], message, sentiment, tweet["user"]["friend_count"], tweet["user"]["follower_count"] ) ]
+        location = tweet["user"]["location"] if tweet["user"]["location"] is not None else 'Null'
+        row = [ (
+            tweet["id_str"],
+            True,
+            tweet["created_at"],
+            message,
+            sentiment,
+            tweet["user"]["friends_count"],
+            tweet["user"]["followers_count"],
+            location
+        ) ]
         self.client.insert_rows(self.table, row)
 
     def on_status(self, status):
-        print(status.text)
+        status = json.loads(status)
+        message = self.clean_text(status["text"])
+        sentiment = self.analyzer.get_sentiment(message)
+        location = status["user"]["location"] if status["user"]["location"] is not None else 'Null'
+        row = [ (
+            status["id_str"],
+            True,
+            status["created_at"],
+            message,
+            sentiment,
+            status["user"]["friends_count"],
+            status["user"]["followers_count"],
+            location
+        ) ]
+        self.client.insert_rows(self.table, row)
     
     def on_error(self, status_code):
         print(status_code)
