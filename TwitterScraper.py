@@ -1,4 +1,5 @@
 from SentimentAnalyzer import SentimentAnalyzer
+from BigQuery import BigQuery
 
 import datetime, math, os, re, sys
 import tweepy
@@ -15,29 +16,52 @@ class TwitterScraper(object):
             self.auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
             self.auth.set_access_token(access_token, access_secret)
             self.api = tweepy.API(self.auth)
+            self.bigquery = BigQuery("twitter", "messages")
         except Exception as e:
             print("Error Authenticating: {}".format(str(e)))
             sys.exit(1)
     
     def clean_text(self, text):
-        return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
+        return " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
     
-    def get_tweets(self, query):
+    def write_tweets(self, query):
         try:
-            tweets = tweepy.Cursor(self.api.search, q=query).items(200)
-            for x in tweets:
-                self.tweets.append({
-                    "created_at": x._json["created_at"],
-                    "text": x._json["text"],
-                    "user": {
-                        "id": x._json["user"]["id"],
-                        "location": x._json["user"]["location"],
-                        "followers_count": x._json["user"]["followers_count"],
-                        "friends_count": x._json["user"]["friends_count"]
-                    },
-                    "geo": x._json["geo"],
-                    "sentiment": self.analyzer.get_sentiment(self.clean_text(x._json["text"]))
-                })
+            # current_date = datetime.date.today().strftime("%Y-%m-%d")
+            # last_five_days = (datetime.date.today() - datetime.timedelta(days = 5)).strftime("%Y-%m-%d")
+            tickets = tweepy.Cursor(
+                self.api.search,
+                q = query
+                # since = last_five_days,
+                # until = current_date
+            ).items(200)
+            rows = []
+            for x in tickets:
+                # self.tweets.append({
+                #     "created_at": x._json["created_at"],
+                #     "text": x._json["text"],
+                #     "user": {
+                #         "id": x._json["user"]["id"],
+                #         "location": x._json["user"]["location"],
+                #         "followers_count": x._json["user"]["followers_count"],
+                #         "friends_count": x._json["user"]["friends_count"]
+                #     },
+                #     "geo": x._json["geo"],
+                #     "sentiment": self.analyzer.get_sentiment(self.clean_text(x._json["text"]))
+                # })
+                cleanText = self.clean_text(x._json["text"])
+                createDatetime = x._json["created_at"].split(" ")
+                createDatetime = datetime.datetime.strptime(" ".join([createDatetime[i] for i in [1, 2, 5, 3]]), "%b %d %Y %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
+                r = (
+                    x._json["user"]["id"],
+                    True,
+                    createDatetime,
+                    cleanText,
+                    self.analyzer.get_sentiment(cleanText),
+                    x._json["user"]["friends_count"],
+                    x._json["user"]["followers_count"]
+                )
+                rows += [r]
+            self.bigquery.write_to_bigquery(rows)
         except Exception as e:
             print("Error Searching Tweets: {}".format(str(e)))
             sys.exit(1)
