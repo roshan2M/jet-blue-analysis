@@ -20,4 +20,4 @@ if __name__ == "__main__":
     #     "access_token": ""
     # })
     scraper = TwitterScraper()
-    tweets = scraper.write_tweets('JetBlue')
+    scraper.write_tweets('JetBlue')

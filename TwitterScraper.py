@@ -26,46 +26,50 @@ class TwitterScraper(object):
     
     def write_tweets(self, query):
         try:
-            # current_date = datetime.date.today().strftime("%Y-%m-%d")
-            # last_five_days = (datetime.date.today() - datetime.timedelta(days = 5)).strftime("%Y-%m-%d")
-            tickets = tweepy.Cursor(
-                self.api.search,
-                q = query
-                # since = last_five_days,
-                # until = current_date
-            ).items(200)
-            rows = []
-            for x in tickets:
-                # self.tweets.append({
-                #     "created_at": x._json["created_at"],
-                #     "text": x._json["text"],
-                #     "user": {
-                #         "id": x._json["user"]["id"],
-                #         "location": x._json["user"]["location"],
-                #         "followers_count": x._json["user"]["followers_count"],
-                #         "friends_count": x._json["user"]["friends_count"]
-                #     },
-                #     "geo": x._json["geo"],
-                #     "sentiment": self.analyzer.get_sentiment(self.clean_text(x._json["text"]))
-                # })
-                cleanText = self.clean_text(x._json["text"])
-                createDatetime = x._json["created_at"].split(" ")
-                createDatetime = datetime.datetime.strptime(" ".join([createDatetime[i] for i in [1, 2, 5, 3]]), "%b %d %Y %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
-                r = (
-                    x._json["user"]["id"],
-                    True,
-                    createDatetime,
-                    cleanText,
-                    self.analyzer.get_sentiment(cleanText),
-                    x._json["user"]["friends_count"],
-                    x._json["user"]["followers_count"]
-                )
-                rows += [r]
-            self.bigquery.write_to_bigquery(rows)
+            iterations = 0
+            max_id = 0
+            while iterations < 150:
+                print("Iteration: {}".format(iterations))
+                # current_date = datetime.date.today().strftime("%Y-%m-%d")
+                # last_five_days = (datetime.date.today() - datetime.timedelta(days = 5)).strftime("%Y-%m-%d")
+                if iterations > 0:
+                    tickets = tweepy.Cursor(
+                        self.api.search,
+                        q = query,
+                        max_id = max_id
+                    ).items(100)
+                else:
+                    tickets = tweepy.Cursor(
+                        self.api.search,
+                        q = query
+                    ).items(100)
+                rows = []
+                for i, x in enumerate(tickets):
+                    if i == 0:
+                        max_id = x._json["id"]
+                    cleanText = self.clean_text(x._json["text"])
+                    location = x._json["user"]["location"] if x._json["user"]["location"] is not None else 'Null'
+                    createDatetime = x._json["created_at"].split(" ")
+                    createDatetime = datetime.datetime.strptime(" ".join([createDatetime[i] for i in [1, 2, 5, 3]]), "%b %d %Y %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
+                    r = (
+                        x._json["user"]["id"],
+                        True,
+                        createDatetime,
+                        cleanText,
+                        self.analyzer.get_sentiment(cleanText),
+                        x._json["user"]["friends_count"],
+                        x._json["user"]["followers_count"],
+                        location
+                    )
+                    rows += [r]
+                iterations += 1
+                self.bigquery.write_to_bigquery(rows)
+                self.bigquery.write_to_bigquery(rows)
+                self.bigquery.write_to_bigquery(rows)
+                self.bigquery.write_to_bigquery(rows)
         except Exception as e:
             print("Error Searching Tweets: {}".format(str(e)))
             sys.exit(1)
-        return self.tweets
     
     def weight(self, days):
         if days < 0:

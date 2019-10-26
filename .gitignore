@@ -1,3 +1,5 @@
 env.sh
 config.code-workspace
 bigquery_credentials.json
+*.pyc
+__pycache__
