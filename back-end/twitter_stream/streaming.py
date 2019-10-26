@@ -77,4 +77,5 @@ class TwitterStream(object):
         self.stream.filter(track=['JetBlue'])
 
 twitter_stream = TwitterStream()
+print("Twitter streaming service is running.")
 twitter_stream.run()

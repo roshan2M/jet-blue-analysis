@@ -1,0 +1,3 @@
+service: twitter-stream
+runtime: python37
+api_version: 1
