@@ -52,6 +52,7 @@ C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\EntityFramework.SqlServer.dll
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\Newtonsoft.Json.dll
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\System.Net.Http.Formatting.dll
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\System.Web.Helpers.dll
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\System.Web.Http.dll
@@ -72,6 +73,7 @@ C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\System.Web.WebPages.xml
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\System.Web.WebPages.Razor.xml
+C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\Newtonsoft.Json.xml
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\Antlr3.Runtime.pdb
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\System.Net.Http.Formatting.xml
 C:\Users\Moe\Documents\GitHub\jet-blue-analysis\front-end\JetBlueCRS\JetBlueCRS\bin\System.Web.Http.xml
