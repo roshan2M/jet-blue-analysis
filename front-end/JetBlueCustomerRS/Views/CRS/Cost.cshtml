@@ -58,23 +58,26 @@
     <b><img src="~/Content/jetblue_white_logo.png" style="max-width:15%; max-height:190px; margin-top:4px;" /> CRS</b>
 </div>
 
-<div id="mainChart" style="display:inline-block;"></div>
+<iframe width="750" height="550" style="display:block;" src="https://datastudio.google.com/embed/reporting/02206049-e338-4511-94cc-8ecfecfddfae/page/PyJ4"></iframe>
 <div style="height:350px; width:375px; background-color:#ffa200; border-radius: 25px; float:right; margin-top:15px;">
     <div style="height:300px; width:325px; background-color:#e1e8f7; border-radius: 25px; margin:0 auto; margin-top:24px; text-align:center">
-        <b>Highest Ranking Data:</b> <br/> <i> Most recorded customers by country </i> <br /> <br />
-        ViewBag.Model.ElementAt(0).Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>ViewBag.Model.ElementAt(0).Sentiment</b> <br />
-        ViewBag.Model.ElementAt(1).Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>ViewBag.Model.ElementAt(1).Sentiment</b> <br />
-        ViewBag.Model.ElementAt(2).Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>ViewBag.Model.ElementAt(2).Sentiment</b> <br />
-        ViewBag.Model.ElementAt(3).Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>ViewBag.Model.ElementAt(3).Sentiment</b> <br />
-        ViewBag.Model.ElementAt(4).Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>ViewBag.Model.ElementAt(4).Sentiment</b>
-</div>
+        <br /> <b>Significant Ranking Data:</b> <br /> <i> Most recorded likes by sentiment </i> <br /> <br />
+        0 Recorded Interactions &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b> -6.9% Sentiment</b> <br />
+        1 Recorded Interactions &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b> 1.6% Sentiment</b> <br />
+        2 Recorded Interactions &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b> -9.2% Sentiment</b> <br />
+        3 Recorded Interactions &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b> -4.6% Sentiment</b> <br /> <br />
+        <img src="~/Content/processing.gif" style="height:25%; width:40%" />
+    </div>
 </div>
 <div style="height:250px; width:375px; background-color:#c9763e; border-radius: 25px; float:right; margin-top:25px; margin-left:400px;">
     <div style="height:200px; width:325px; background-color:#e1e8f7; border-radius: 25px; margin:0 auto; margin-top:24px; text-align:center">
-        <b>Data Sample:</b> <br /> <br /> <br /> <br />
-        <i>ViewBag.Model.ElementAt(0).ClientText</i>
-        <br /> <br /> <br />
-        <img id="sourcelogo"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - ViewBag.Model.ElementAt(0).Name <img src="~/Content/user.png" style="max-width:15%; max-height:15%; margin-top:4px;">
+        <b>Data Sample:</b> <br/>
+        <i>
+            Splitting the cost of a flight with points and a credit card.
+            Hello! Last year I was able to put points towards a flight and pay the difference with my credit card. I didn't see that option when I was looking to book a flight today and was just wondering when that all changed, as it was kind of a bummer to find out!
+        </i>
+        <br />
+        <img id="sourcelogo" src="~/Content/reddit.png" style="width:7%;height:12%"> &nbsp; &nbsp;  &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; - Dowegetnachos <img src="~/Content/user.png" style="max-width:15%; max-height:15%; margin-top:4px;">
     </div>
 </div>
 
@@ -85,22 +88,6 @@
 
 <script type="text/javascript">
                     window.onload = function () {
-
-                    var chart = new CanvasJS.Chart("mainChart", {
-	                animationEnabled: true,
-                    theme: "dark2", // "light1", "dark1", "dark2",
-                    height: 550,
-                    width:750,
-	                title: {
-		                text: "Medals Won by Few Countries - 2016 Summer Olympics"
-	                },
-	                data: [{
-		                type: "column",
-		                dataPoints:  @Html.Raw(ViewBag.DataPoints)
-	                    }]
-                    });
-                    chart.render();
-
                 }
 </script>
 
