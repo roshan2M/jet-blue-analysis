@@ -3,3 +3,4 @@ config.code-workspace
 bigquery_credentials.json
 *.pyc
 __pycache__
+.vs/

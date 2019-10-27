@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "CRS Service Analysis";
+}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #0033a0;
+        }
+
+            .topnav b {
+                float: right;
+                color: #fff;
+                padding-right: 10px;
+                padding-left: 10px;
+                text-align:right;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                font-size: 17px;
+            }
+
+            .topnav a {
+                float: left;
+                color: #fff;
+                text-align: center;
+                padding-right: 30px;
+                padding-left: 30px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+                .topnav a:hover {
+                    background-color: #ff8200;
+                }
+
+                .topnav a.active {
+                    background-color: #93ade4;
+                }
+    </style>
+</head>
+
+<body style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,32,91,1) 50%, rgba(83,9,186,1) 100%);">
+</body>
+
+<div class="topnav">
+    <a href="~/CRS/Cost" style="background-color:#93ade4" id="first">Cost</a>
+    <a href="~/CRS/Food" style="background-color:#6087db" id="second">Food</a>
+    <a href="~/CRS/Entertainment" style="background-color:#2c64db" id="third">Entertainment</a>
+    <a href="~/CRS/Service" style="background-color:#003bb8; margin-right:20px" id="fourth">Service</a>
+    <b><img src="~/Content/jetblue_white_logo.png" style="max-width:15%; max-height:190px; margin-top:4px;" /> CRS</b>
+</div>
+
+<div style="height:250px; width:375px; background-color:#c9763e; border-radius: 25px; float:left; margin-top:25px;">
+    <div style="height:200px; width:325px; background-color:#e1e8f7; border-radius: 25px; margin:0 auto; margin-top:24px; text-align:center">
+        <b>Data Sample:</b> <br /> <br /> <br /> <br />
+        <i>ViewBag.Model.ElementAt(0).ClientText</i>
+        <br /> <br /> <br />
+        <img id="sourcelogo"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - ViewBag.Model.ElementAt(0).Name <img src="~/Content/user.png" style="max-width:15%; max-height:15%; margin-top:4px;">
+    </div>
+</div>
+<div style="height:350px; width:375px; background-color:#ffa200; border-radius: 25px; float:left; margin-top:15px;margin-right:400px; z-index:11; position:relative">
+    <div style="height:300px; width:325px; background-color:#e1e8f7; border-radius: 25px; margin:0 auto; margin-top:24px; text-align:center">
+        <b>Highest Ranking Data:</b> <br /> <i> Most recorded customers by country </i> <br /> <br />
+        ViewBag.Model.ElementAt(0).Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>ViewBag.Model.ElementAt(0).Sentiment</b> <br />
+        ViewBag.Model.ElementAt(1).Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>ViewBag.Model.ElementAt(1).Sentiment</b> <br />
+        ViewBag.Model.ElementAt(2).Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>ViewBag.Model.ElementAt(2).Sentiment</b> <br />
+        ViewBag.Model.ElementAt(3).Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>ViewBag.Model.ElementAt(3).Sentiment</b> <br />
+        ViewBag.Model.ElementAt(4).Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>ViewBag.Model.ElementAt(4).Sentiment</b>
+    </div>
+</div>
+<div id="mainChart" style="display:inline-block; margin-left:15px"></div>
+
+
+<body>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+</body>
+
+<script type="text/javascript">
+                    window.onload = function () {
+
+                    var chart = new CanvasJS.Chart("mainChart", {
+	                animationEnabled: true,
+                    theme: "dark2", // "light1", "dark1", "dark2",
+                    height: 550,
+                    width:750,
+	                title: {
+		                text: "Medals Won by Few Countries - 2016 Summer Olympics"
+	                },
+	                data: [{
+		                type: "pie",
+		                dataPoints:  @Html.Raw(ViewBag.DataPoints)
+	                    }]
+                    });
+                    chart.render();
+
+                }
+</script>
+
+<script type="text/javascript">
+    var div1 = document.getElementById('first');
+    div1.onmouseover = function () {
+        this.style.backgroundColor = '#ff8200';
+    };
+    div1.onmouseout = function () {
+        this.style.backgroundColor = '#93ade4';
+    };
+    var div2 = document.getElementById('second');
+    div2.onmouseover = function () {
+        this.style.backgroundColor = '#ff8200';
+    };
+    div2.onmouseout = function () {
+        this.style.backgroundColor = '#6087db';
+    };
+    var div3 = document.getElementById('third');
+    div3.onmouseover = function () {
+        this.style.backgroundColor = '#ff8200';
+    };
+    div3.onmouseout = function () {
+        this.style.backgroundColor = '#2c64db';
+    };
+    var div4 = document.getElementById('fourth');
+    div4.onmouseover = function () {
+        this.style.backgroundColor = '#ff8200';
+    };
+    div4.onmouseout = function () {
+        this.style.backgroundColor = '#003bb8';
+    };
+</script>
